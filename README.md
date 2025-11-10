@@ -7,7 +7,7 @@ Baixe o instalador neste link: [UB-Mannheim Tesseract Installer](https://github.
 
 Durante a instalação, na tela "Select Additional Language data...", marque a opção "Portuguese" para instalar o pacote de idioma português.
 
-Na última etapa, anote o local onde o Tesseract foi instalado. O padrão é C:\Program Files\Tesseract-OCR.
+Na última etapa, anote o local onde o Tesseract foi instalado. O padrão é `C:\Program Files\Tesseract-OCR`.
 
 Após instalar, você precisa informar ao código Python onde encontrar o Tesseract.
 
@@ -23,14 +23,16 @@ sudo apt-get install tesseract-ocr tesseract-ocr-por
 
 ## 2. Configurações do projeto
 
-1. Clone o repositório: git clone https:\\...
+No terminal:
 
-2. Abra o terminal dentro da pasta que você baixou e digite: `cd {CAMINHO DA PASTA}`.
+1. Clone o repositório: `git clone https:\\...`
 
-3. Crie um ambiente virtual no terminal: `python -m venv venv`.
+2. Abra dentro da pasta que você baixou e digite: `cd {CAMINHO DA PASTA}`.
+
+3. Crie um ambiente virtual: `python -m venv venv`.
   
 4. Ative ele(windows): `.\venv\Scripts\activate`.
 5. Ative ele(linux/mac): `source venv/bin/activate`.
 
-6. Instale as dependências : `pip install -r requirements.txt`.
+6. Instale as dependências: `pip install -r requirements.txt`.
 
