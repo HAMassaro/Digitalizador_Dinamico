@@ -3,7 +3,7 @@
 ## 1. Pré Requisitos
 ### Windows
 
-Baixe o instalador neste link: UB-Mannheim Tesseract Installer
+Baixe o instalador neste link: [UB-Mannheim Tesseract Installer](https://github.com/tesseract-ocr/tesseract/wiki)
 
 Durante a instalação, na tela "Select Additional Language data...", marque a opção "Portuguese" para instalar o pacote de idioma português.
 
