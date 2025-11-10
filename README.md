@@ -25,12 +25,12 @@ sudo apt-get install tesseract-ocr tesseract-ocr-por
 
 1. Clone o repositório: git clone https:\\...
 
-2. Abra o terminal dentro da pasta que você baixou e digite `cd {CAMINHO DA PASTA}`.
+2. Abra o terminal dentro da pasta que você baixou e digite: `cd {CAMINHO DA PASTA}`.
 
-3. Crie um ambiente virtual no terminal: `python -m venv venv`;
+3. Crie um ambiente virtual no terminal: `python -m venv venv`.
   
-4. Ative ele(windows): `.\venv\Scripts\activate`;
-5. Ative ele(linux/mac): `source venv/bin/activate` .
+4. Ative ele(windows): `.\venv\Scripts\activate`.
+5. Ative ele(linux/mac): `source venv/bin/activate`.
 
-6. Instale as dependencias : pip install -r requirements.txt
+6. Instale as dependências : `pip install -r requirements.txt`.
 
