@@ -11,4 +11,4 @@ Na última etapa, anote o local onde o Tesseract foi instalado. O padrão é C:\
 
 Após instalar, você precisa informar ao código Python onde encontrar o Tesseract.
 
-Verifique se o caminho no topo do arquivo processamento_pdi.py está correto: ´pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'´
+Verifique se o caminho no topo do arquivo processamento_pdi.py está correto: `pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'`
