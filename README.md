@@ -15,17 +15,17 @@ Verifique se o caminho no topo do arquivo processamento_pdi.py está correto: `p
 
 ### MacOS
 
-brew install tesseract tesseract-lang
+`brew install tesseract tesseract-lang`
 
 ### Linux
 
-sudo apt-get install tesseract-ocr tesseract-ocr-por
+`sudo apt-get install tesseract-ocr tesseract-ocr-por`
 
 ## 2. Configurações do projeto
 
 No terminal:
 
-1. Clone o repositório: `git clone https:\\...`
+1. Clone o repositório: `git clone https:\\...`.
 
 2. Abra dentro da pasta que você baixou e digite: `cd {CAMINHO DA PASTA}`.
 
@@ -35,4 +35,26 @@ No terminal:
 5. Ative ele(linux/mac): `source venv/bin/activate`.
 
 6. Instale as dependências: `pip install -r requirements.txt`.
+
+## 3. Como executar
+
+Digite no terminal : `python app.py`
+
+Acesse: http://127.0.0.1:5000
+
+## 4. Como usar
+
+1. Clique em `+ Adicionar campo` para cada dado que deseja extrair.
+
+2. No campo de texto, digite o rótulo exatamente como ele aparece na imagem (ex: nome da empresa, cep destino)
+
+3. `Layout ao lado`: para recibos e documentos onde o valor está à direita do rótulo.
+
+4. `Layout abaixo`: para formulários onde o valor está abaixo do rótulo.
+
+5. Selecione o arquivo de imagem que você deseja processar.
+
+6. Clique no botão `Digitalizar`.
+
+7. O JSON com os dados extraídos aparecerá na caixa `Resultados da extração`.
 
