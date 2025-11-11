@@ -46,7 +46,7 @@ Acesse: http://127.0.0.1:5000
 
 1. Clique em `+ Adicionar campo` para cada dado que deseja extrair.
 
-2. No campo de texto, digite o rótulo exatamente como ele aparece na imagem (ex: nome da empresa, cep destino)
+2. No campo de texto, digite o rótulo exatamente como ele aparece na imagem.
 
 3. `Layout ao lado`: para recibos e documentos onde o valor está à direita do rótulo.
 
