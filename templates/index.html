@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FormFlow - Digitalizador</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 2em auto; background: #f9f9f9; }
+        h1, h3 { color: #333; }
+        #upload-form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input[type="file"] { border: 1px solid #ddd; padding: 10px; width: 100%; box-sizing: border-box; }
+        button { background: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 5px; }
+        button:hover { background: #0056b3; }
+        #add-field-btn { background: #28a745; }
+        #add-field-btn:hover { background: #218838; }
+        h3 { margin-top: 20px; }
+        /*a <pre> é a tela preta que mostra o resultado do JSON */
+        #results { background: #222; color: #00f900; padding: 15px; border-radius: 5px; white-space: pre-wrap; word-wrap: break-word; }
+        #loading { display: none; text-align: center; font-weight: bold; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        
+        /*estilos do construtor de campos */
+        .field-entry { display: flex; gap: 10px; margin-bottom: 10px; }
+        .field-entry input, .field-entry select {
+            border: 1px solid #ddd; padding: 8px; border-radius: 4px;
+        }
+        .field-entry .field-label { flex-grow: 1; }
+        .field-entry .field-layout { width: 130px; }
+        .field-entry .remove-btn { 
+            background: #dc3545; padding: 8px 12px; font-size: 14px;
+        }
+        .field-entry .remove-btn:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <h1>DD - Digitalizador Dinamico</h1>
+    
+    <form id="upload-form">
+        <h3>Campos para extrair:</h3>
+        <div id="fields-container">
+            </div>
+        <button type="button" id="add-field-btn">+ Adicionar campo</button>
+        <hr>
+        
+        <label for="file-input">Arquivo com imagem:</label>
+        <input type="file" id="file-input" name="file" accept="image/png, image/jpeg">
+        <br><br>
+        <button type="submit">Digitalizar</button>
+    </form>
+
+    <div id="loading">Processando...</div>
+
+    <h3>Resultados da extração/json:</h3>
+    <pre id="results"></pre>
+
+    <script>
+        //pega os elementos html q vai interagir
+        const form = document.getElementById('upload-form');
+        const resultsEl = document.getElementById('results');
+        const loadingEl = document.getElementById('loading');
+        const fileInput = document.getElementById('file-input');
+        const fieldsContainer = document.getElementById('fields-container');
+        
+        //
+        //quando o botão + Adicionar campo é clicado
+        document.getElementById('add-field-btn').addEventListener('click', () => {
+            const fieldId = new Date().getTime(); //id unico (baseado no tempo)
+            
+            //cria o html para o novo campo
+            const newFieldHtml = `
+                <div class="field-entry" data-id="${fieldId}">
+                    <input type="text" placeholder="Rótulo (Ex: CNPJ)" class="field-label">
+                    <select class="field-layout">
+                        <option value="inline">Layout ao lado</option>
+                        <option value="below">Layout abaixo</option>
+                    </select>
+                    <button type="button" class="remove-btn" onclick="removeField(${fieldId})">Remover</button>
+                </div>
+            `;
+            //insere o novo HTML dentro do fields-container
+            fieldsContainer.insertAdjacentHTML('beforeend', newFieldHtml);
+        });
+
+        //função para remover um campo
+        function removeField(id) {
+            document.querySelector(`.field-entry[data-id="${id}"]`).remove();
+        }
+
+
+        //quando o usuário clica em digitalizar
+        form.addEventListener('submit', async (e) => {
+            // impede o navegador de recarregar a página
+            e.preventDefault(); 
+            
+            if (!fileInput.files || fileInput.files.length === 0) {
+                resultsEl.textContent = '{"erro": "Por favor, selecione um arquivo."}';
+                return;
+            }
+
+            const fields = [];
+            document.querySelectorAll('.field-entry').forEach(entry => {
+                const label = entry.querySelector('.field-label').value;
+                const layout = entry.querySelector('.field-layout').value;
+                if (label.trim()) { //so adiciona se o usuário digitou um rotulo
+                    fields.push({ label: label.trim(), layout: layout });
+                }
+            });
+
+            if (fields.length === 0) {
+                resultsEl.textContent = '{"erro": "Adicione pelo menos um campo para extrair."}';
+                return;
+            }
+
+            //FormData é o objeto usado para enviar arquivos e texto
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+            
+            //converte a lista de campos fields, objeto js, para uma string JSON
+            formData.append('rotulos_map', JSON.stringify(fields));
+
+            //feedback visual
+            loadingEl.style.display = 'block';
+            resultsEl.textContent = '';
+
+            //requisição
+            try {
+
+                //await pausa o código aqui até o servidor responder
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                //await de novo para ler a resposta JSON do servidor
+                const data = await response.json();
+                
+                //mostra o JSON formatado na tela preta
+                resultsEl.textContent = JSON.stringify(data, null, 2);
+
+            } catch (error) {
+                console.error('Erro:', error);
+                resultsEl.textContent = '{"erro": "Falha na comunicação com o servidor."}';
+            } finally {
+                //sempre executa mesmo se der erro
+                loadingEl.style.display = 'none';
+            }
+        });
+
+        //adiciona um campo de exemplo para começar
+        document.getElementById('add-field-btn').click();
+    </script>
+</body>
+</html>
