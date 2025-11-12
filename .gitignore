@@ -1,0 +1,15 @@
+venv/
+*.venv/
+env/
+.env
+
+__pycache__/
+*.pyc
+*.pyo
+
+uploads/
+
+debug_para_tesseract.png
+
+.DS_Store
+Thumbs.db
