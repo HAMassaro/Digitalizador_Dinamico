@@ -1,5 +1,3 @@
-# PFinal_Pdi
-
 ## 1. Pré Requisitos (instalação do tesseract)
 ### Windows
 
